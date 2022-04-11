@@ -11,12 +11,24 @@ class Context:
         self.gridScale = gridScale 
         self.windowX = windowDimensions[0]
         self.windowY = windowDimensions[1]
-        self.states = {'startSim':False,'pauseSim':False,'stopSim':False,'setStart':False,'setTarget':False,'placeWalls':False,'removeWalls':False,'pathDone':False,'pathActive':False,'allowDiagonals':False}
+        self.states = {
+            'startSim': False,
+            'pauseSim': False,
+            'stopSim': False,
+            'setStart': False,
+            'setTarget': False,
+            'placeWalls': False,
+            'removeWalls': False,
+            'pathDone': False,
+            'pathActive': False,
+            'allowDiagonals': False
+        }
         self.MapState = Map
         self.GridState = Grid
         self.entityPositions = {}
         self.entityMap = {}
         self.entities = entities
+
         for i in self.entities:
             self.entityMap[i.tag] = i 
             self.entityPositions[i.getEntityid()] = i.getComponent('transform').position
@@ -31,22 +43,25 @@ class Context:
         elif(self.MapState != None and self.GridState != None and self.entityPositions != {}):
             stateString += "gridScale-"
             stateString += str(self.gridScale) + "\n"
-            
             stateString += "mapstate-"
+
             for i in self.MapState.getObstacles():
                 stateString += str(i[0])+":"+str(i[1])+","
+
             stateString = stateString[:-1]
             stateString += "\n"
-            
             stateString += "gridstate-"
+
             for i in self.GridState.getObstacles():
                 stateString += str(i[0])+":"+str(i[1])+","
+
             stateString = stateString[:-1]
             stateString += "\n"
-            
             stateString += "entitypositions-"
+
             for i,j in self.entityPositions.items():
                 stateString += str(i)+":"+str(j[0])+","+str(j[1])+"|"
+
             stateString = stateString[:-1]
             stateString += "\n"
              
@@ -1102,7 +1117,7 @@ class Grid:
 1.)add multiple ai entities and create multiple targets enable entities to sense walls 
 '''
 
-def main():
+if __name__ == '__main__':
     gridScale = 30
     windowDimensions = [600,600]
     entities = EntityManager.getEntities()
@@ -1137,6 +1152,3 @@ def main():
     while(True):
         Sys.updateSystems()
         clock.tick(60)
-main()
-        
-        
